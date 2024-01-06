@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/crop",
+  "render_type": "cutout",
+  "textures": {
+    "crop": "finalitycore:block/living_netherwarts_stage0"
+  }
+
+}
