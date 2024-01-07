@@ -4,6 +4,7 @@
 # Note that there are a couple of TOML lists in this file.
 # Find more information on toml format here:  https://github.com/toml-lang/toml
 # The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
+
 modLoader="javafml" #mandatory
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
 loaderVersion="${loader_version_range}" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
@@ -15,7 +16,7 @@ license="${mod_license}"
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
-modId="${mod_id}" #mandatory
+modId="finalitycore" #mandatory
 # The version number of the mod
 version="${mod_version}" #mandatory
 # A display name for the mod
@@ -41,7 +42,7 @@ authors="${mod_authors}" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''${mod_description}'''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.${mod_id}]] #optional
+[[dependencies.finalitycore]] #optional
 # the modid of the dependency
 modId="forge" #mandatory
 # Does this dependency have to exist - if not, ordering below must be specified
@@ -55,10 +56,16 @@ ordering="NONE"
 # Side this dependency is applied on - BOTH, CLIENT, or SERVER
 side="BOTH"
 # Here's another dependency
-[[dependencies.${mod_id}]]
+[[dependencies.finalitycore]]
 modId="minecraft"
 mandatory=true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
 versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"
+[[dependencies.finalitycore]]
+modId="create"
+mandatory=true
+versionRange="[0.5.1.f,)"
 ordering="NONE"
 side="BOTH"

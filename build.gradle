@@ -1,10 +1,26 @@
+buildscript {
+    repositories {
+        // These repositories are only for Gradle plugins, put any other repositories in the repository block further below
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public' }
+        maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://maven.parchmentmc.org' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath "org.spongepowered:mixingradle:0.7-SNAPSHOT"
+        classpath 'org.parchmentmc:librarian:1.+'
+    }
+}
 plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
-}
+    id 'java-library'
 
+}
+jarJar.enable()
 version = mod_version
 group = mod_group_id
 
@@ -40,6 +56,8 @@ minecraft {
     // This property allows configuring Gradle's ProcessResources task(s) to run on IDE output locations before launching the game.
     // It is REQUIRED to be set to true for this template to function.
     // See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
+
+
     copyIdeResources = true
 
     // When true, this property will add the folder name of all declared run configurations to generated IDE run configurations.
@@ -91,6 +109,8 @@ minecraft {
         client {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
+
         }
 
         server {
@@ -127,6 +147,16 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven {
+        url "https://maven.tterrag.com/"
+    }
+    maven {
+        // Mixed mappings, Registrate, Flywheel
+        name 'tterrag maven'
+        url 'https://maven.tterrag.com'
+    }
+
+
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so:
     // flatDir {
     //     dir 'libs'
@@ -141,8 +171,11 @@ dependencies {
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     implementation fg.deobf("curse.maven:create-328085:4835190") { transitive = false }
-//    runtimeOnly fg.deobf("com.jozufozu.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}")
-//    runtimeOnly fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
+
+    implementation fg.deobf("curse.maven:create-328085:4835190")
+//    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
+//    implementation(fg.deobf("com.tterrag.registrate:Registrate:EnderIO-6.0.1371"))
+//    jarJar(group: 'com.tterrag.registrate', name: 'Registrate', version: {registrate_version})
 //
 //
 //    // implementation fg.deobf("shadows:Apotheosis:1.19.2-6.4.0")
@@ -215,6 +248,11 @@ tasks.named('jar', Jar).configure {
 // tasks.named('publish').configure {
 //     dependsOn 'reobfJar'
 // }
+reobf {
+    jarJar { }
+}
+
+tasks.jarJar.finalizedBy('reobfJarJar')
 
 publishing {
     publications {
@@ -231,9 +269,11 @@ publishing {
 
 
 
+
     }
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
+
