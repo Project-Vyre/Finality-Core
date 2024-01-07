@@ -88,6 +88,10 @@ minecraft {
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             property 'forge.enabledGameTestNamespaces', mod_id
         }
+        client {
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+        }
 
         server {
             property 'forge.enabledGameTestNamespaces', mod_id
@@ -131,8 +135,27 @@ dependencies {
     // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+//    runtimeOnly fg.deobf("com.simibubi.create:create-${create_minecraft_version}:${create_version}:slim") { transitive = false }
+//    runtimeOnly fg.deobf("com.jozufozu.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}")
+//    runtimeOnly fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
+//    // ADD Apotheosis dependncy
+//    //implementation fg.deobf("com.shadows.apotheosis:apotheosis:${apoth_minecraft_version}:${apoth_version}")
+//
+//    // implementation fg.deobf("shadows:Apotheosis:1.19.2-6.4.0")
+//    //  compileOnly(fg.deobf("shadows:Apotheosis:1.19.2-6.4.0"))
+//    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}"))
+//    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}"))
 
-    // Real mod deobf dependency examples - these get remapped to your current mappings
+
+    // ForgeGradle
+
+
+// these two are unfortunately needed since fg.deobf doesn't respect transitive dependencies yet
+
+
+
+
+    // Real m  od deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
     // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
     // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
@@ -199,6 +222,16 @@ publishing {
         maven {
             url "file://${project.projectDir}/mcmodsrepo"
         }
+
+        maven {
+            url "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+
+
+
     }
 }
 
