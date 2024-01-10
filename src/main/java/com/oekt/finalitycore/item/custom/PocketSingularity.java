@@ -21,10 +21,18 @@ import java.util.List;
 public class PocketSingularity extends Item {
 
 
+    public int getSize() {
+        return size;
+    }
 
-    public PocketSingularity(Properties p_41383_) {
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    int size = 0;
+    public PocketSingularity(Properties p_41383_, int size) {
         super(p_41383_);
-
+        this.size = size;
     }
 
 //    public ItemStack createStorege(NonNullList<ItemStack> loot) {
@@ -47,7 +55,7 @@ public class PocketSingularity extends Item {
 
             player.getInventory().add(itemStack);
         }
-
+        this.setSize(get_items(to_inv_pocket));
         return InteractionResultHolder.consume(ItemStack.EMPTY);
     }
 
