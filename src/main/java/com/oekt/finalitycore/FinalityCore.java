@@ -39,7 +39,7 @@ public class FinalityCore
     // Define mod id in a common place for everything to reference
     public static final String MODID = "finalitycore";
     // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
     // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
 
     // Create a Deferred Register to hold Items which will all be registered under the "examplemod" namespace
@@ -67,7 +67,7 @@ public class FinalityCore
         MinecraftForge.EVENT_BUS.register(this);
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
