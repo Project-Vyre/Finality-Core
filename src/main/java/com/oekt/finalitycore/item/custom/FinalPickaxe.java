@@ -113,5 +113,6 @@ public class FinalPickaxe extends PickaxeItem {
                 }
             }
         }
+        return false;
     }
 }
