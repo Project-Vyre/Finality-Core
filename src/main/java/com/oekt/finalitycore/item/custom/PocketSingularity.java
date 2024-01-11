@@ -8,6 +8,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -46,14 +48,16 @@ public class PocketSingularity extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
-        NonNullList<ItemStack> to_inv_pocket = NonNullList.withSize(300, ItemStack.EMPTY);
+        NonNullList<ItemStack> to_inv_pocket = NonNullList.withSize(1080, ItemStack.EMPTY);
         ItemStack stack = player.getItemInHand(interactionHand);
        // FinalityCore.LOGGER.info(stack.getOrCreateTag().toString());
         ContainerHelper.loadAllItems(stack.getOrCreateTag().copy(), to_inv_pocket);
         //FinalityCore.LOGGER.info(to_inv_pocket.toString());
         for(ItemStack itemStack : to_inv_pocket) {
 
-            player.getInventory().add(itemStack);
+            if(!player.getInventory().add(itemStack)) {
+                dropItemStack(level, player.getX(), player.getY(), player.getZ(), itemStack);
+            }
         }
         this.setSize(get_items(to_inv_pocket));
         return InteractionResultHolder.consume(ItemStack.EMPTY);
@@ -61,10 +65,10 @@ public class PocketSingularity extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> componentList, TooltipFlag tooltipFlag) {
-        NonNullList<ItemStack> to_inv_pocket = NonNullList.withSize(300, ItemStack.EMPTY);
+        NonNullList<ItemStack> to_inv_pocket = NonNullList.withSize(1080, ItemStack.EMPTY);
         ContainerHelper.loadAllItems(stack.getOrCreateTag().copy(), to_inv_pocket);
 
-        componentList.add(Component.literal("Size: " + get_items(to_inv_pocket) + "/300").withStyle(ChatFormatting.GRAY));
+        componentList.add(Component.literal("Size: " + get_items(to_inv_pocket) + "/1080").withStyle(ChatFormatting.GRAY));
         super.appendHoverText(stack, level, componentList, tooltipFlag);
     }
     int get_items(NonNullList<ItemStack> itemStacks) {
@@ -75,5 +79,20 @@ public class PocketSingularity extends Item {
             }
         }
         return count;
+    }
+    public static void dropItemStack(Level p_18993_, double p_18994_, double p_18995_, double p_18996_, ItemStack p_18997_) {
+        double d0 = (double) EntityType.ITEM.getWidth();
+        double d1 = 1.0D - d0;
+        double d2 = d0 / 2.0D;
+        double d3 = Math.floor(p_18994_) + p_18993_.random.nextDouble() * d1 + d2;
+        double d4 = Math.floor(p_18995_) + p_18993_.random.nextDouble() * d1;
+        double d5 = Math.floor(p_18996_) + p_18993_.random.nextDouble() * d1 + d2;
+
+        while (!p_18997_.isEmpty()) {
+            ItemEntity itementity = new ItemEntity(p_18993_, d3, d4, d5, p_18997_.split(1));
+            float f = 0.05F;
+            itementity.setDeltaMovement(p_18993_.random.triangle(0.0D, 0.11485000171139836D), p_18993_.random.triangle(0.2D, 0.11485000171139836D), p_18993_.random.triangle(0.0D, 0.11485000171139836D));
+            p_18993_.addFreshEntity(itementity);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.oekt.finalitycore.item.custom;
 
+import com.oekt.finalitycore.FinalityCore;
 import com.oekt.finalitycore.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -9,8 +10,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
@@ -24,6 +27,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ForgeItemTagsProvider;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
 import java.util.List;
 
 public class FinalPickaxe extends PickaxeItem {
@@ -38,29 +42,39 @@ public class FinalPickaxe extends PickaxeItem {
 
             AABB boundingbox = InstlizeAABBBox(blockPos, 3);
             Iterable<BlockPos> list_of_blocks = GetBlocksPosAABB(boundingbox);
-            NonNullList<ItemStack> to_inv_pocket = NonNullList.createWithCapacity(300);
+            boolean createNewItem = false;
+            NonNullList<ItemStack> to_inv_pocket = NonNullList.createWithCapacity(1080);
             for(BlockPos pos : list_of_blocks) {
                 BlockState blockstat = level.getBlockState(pos);
                 if(blockstat.is(Tags.Blocks.STONE) || blockstat.is(Tags.Blocks.ORES)) {
                     LootContext.Builder lootcontextbuilder = (new LootContext.Builder((ServerLevel) level)).withRandom(level.random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY);
                     //Gets drops
-                    List<ItemStack> drops =  level.getBlockState(pos).getBlock().getDrops(state, lootcontextbuilder);
+                    List<ItemStack> drops =  level.getBlockState(pos).getDrops(lootcontextbuilder);
                     //Adds Drops to Item Stack List
-                    to_inv_pocket.addAll(drops);
+                    if(!addItemLoot(drops, (Player) entity)) {
+                        to_inv_pocket.addAll(drops);
+                        createNewItem = true;
+                    }
 
                     level.destroyBlock(pos, false);
                 }
 
             }
-            ItemStack pocket_item = new ItemStack(ModItems.POCKET_SINGULARITY.get());
+            if(createNewItem) {
+                ItemStack pocket_item = new ItemStack(ModItems.POCKET_SINGULARITY.get());
 
-            CompoundTag nbt = pocket_item.getOrCreateTag();
-            CompoundTag nbt_inv = ContainerHelper.saveAllItems(nbt, to_inv_pocket, true);
+                CompoundTag nbt = pocket_item.getOrCreateTag();
+                CompoundTag nbt_inv = ContainerHelper.saveAllItems(nbt, to_inv_pocket, true);
 
-            if(entity instanceof Player player) {
-                player.getInventory().add(pocket_item);
+                if(entity instanceof Player player) {
+                    boolean result = player.getInventory().add(pocket_item);
+                    if(!result); {
+                        dropItemStack(level, player.getX(), player.getY(), player.getZ(), pocket_item);
+                    }
 
+                }
             }
+
         }
 
 
@@ -98,21 +112,56 @@ public class FinalPickaxe extends PickaxeItem {
         components.add(Component.literal("Mode: " + (nbt.getBoolean("hammer") ? "Hammer" : "Pickaxe")));
         super.appendHoverText(stack, level, components, flag);
     }
-    boolean addItemLoot(NonNullList<ItemStack> itemList, Player player, List<ItemStack> loot) {
+    boolean addItemLoot(List<ItemStack> loot, Player player) {
+        boolean stop = false;
         for(int i = 0; i < player.getInventory().items.size(); i++) {
-            Item item = player.getInventory().items.get(i).getItem();
             ItemStack stack = player.getInventory().items.get(i);
+            Item item = stack.getItem();
+
+
             if(item == ModItems.POCKET_SINGULARITY.get()) {
-                if(item instanceof PocketSingularity pocketSingularity) {
-                    if(pocketSingularity.getSize() > 300) {
-                        itemList.addAll(loot);
-                        return true;
+
+                NonNullList<ItemStack> pocket_SIBGELARTY_storege = NonNullList.withSize(1080, ItemStack.EMPTY);
+                ContainerHelper.loadAllItems(stack.getOrCreateTag(), pocket_SIBGELARTY_storege);
+
+                for (int z = 0; z < pocket_SIBGELARTY_storege.size(); z++) {
+                    FinalityCore.LOGGER.info(loot.get(z).toString());
+                    if(!pocket_SIBGELARTY_storege.get(z).isEmpty()) {
+                        pocket_SIBGELARTY_storege.set(z ,loot.get(z));
+                        FinalityCore.LOGGER.info(loot.get(z).toString());
                     } else {
-                        return false;
+                        break;
                     }
+                    FinalityCore.LOGGER.info("You spin");
                 }
+
+
+
+                ContainerHelper.saveAllItems(stack.getOrCreateTag(), pocket_SIBGELARTY_storege, true);
+                stack.getOrCreateTag().putBoolean("modifyed", true);
+                stop = true;
+                break;
             }
         }
-        return false;
+       if(stop) {
+           return true;
+       }
+       return false;
     }
+    public static void dropItemStack(Level p_18993_, double p_18994_, double p_18995_, double p_18996_, ItemStack p_18997_) {
+        double d0 = (double) EntityType.ITEM.getWidth();
+        double d1 = 1.0D - d0;
+        double d2 = d0 / 2.0D;
+        double d3 = Math.floor(p_18994_) + p_18993_.random.nextDouble() * d1 + d2;
+        double d4 = Math.floor(p_18995_) + p_18993_.random.nextDouble() * d1;
+        double d5 = Math.floor(p_18996_) + p_18993_.random.nextDouble() * d1 + d2;
+
+        while (!p_18997_.isEmpty()) {
+            ItemEntity itementity = new ItemEntity(p_18993_, d3, d4, d5, p_18997_.split(1));
+            float f = 0.05F;
+            itementity.setDeltaMovement(p_18993_.random.triangle(0.0D, 0.11485000171139836D), p_18993_.random.triangle(0.2D, 0.11485000171139836D), p_18993_.random.triangle(0.0D, 0.11485000171139836D));
+            p_18993_.addFreshEntity(itementity);
+        }
+    }
+
 }
