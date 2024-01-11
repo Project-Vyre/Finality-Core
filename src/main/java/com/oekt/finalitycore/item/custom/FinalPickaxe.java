@@ -125,10 +125,10 @@ public class FinalPickaxe extends PickaxeItem {
                 ContainerHelper.loadAllItems(stack.getOrCreateTag(), pocket_SIBGELARTY_storege);
 
                 for (int z = 0; z < pocket_SIBGELARTY_storege.size(); z++) {
-                    FinalityCore.LOGGER.info(loot.get(z).toString());
+
                     if(!pocket_SIBGELARTY_storege.get(z).isEmpty()) {
                         pocket_SIBGELARTY_storege.set(z ,loot.get(z));
-                        FinalityCore.LOGGER.info(loot.get(z).toString());
+                        //FinalityCore.LOGGER.info(loot.get(z).toString());
                     } else {
                         break;
                     }
