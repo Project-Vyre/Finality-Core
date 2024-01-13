@@ -25,6 +25,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ForgeItemTagsProvider;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
@@ -123,17 +124,25 @@ public class FinalPickaxe extends PickaxeItem {
 
                 NonNullList<ItemStack> pocket_SIBGELARTY_storege = NonNullList.withSize(1080, ItemStack.EMPTY);
                 ContainerHelper.loadAllItems(stack.getOrCreateTag(), pocket_SIBGELARTY_storege);
+                int d = pocket_SIBGELARTY_storege.size() - loot.size();
+                    for (int e = 0; e < pocket_SIBGELARTY_storege.size(); e++) {
+                        ItemStack stackTarget = pocket_SIBGELARTY_storege.get(e);
+                        if(stackTarget.isEmpty()) {
+                            for(ItemStack itemStackLoot : loot) {
+                                if(!itemStackLoot.isEmpty()) {
 
-                for (int z = 0; z < pocket_SIBGELARTY_storege.size(); z++) {
+                                    pocket_SIBGELARTY_storege.set(e, itemStackLoot.copy());
+                                    break;
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
 
-                    if(!pocket_SIBGELARTY_storege.get(z).isEmpty()) {
-                        pocket_SIBGELARTY_storege.set(z ,loot.get(z));
-                        //FinalityCore.LOGGER.info(loot.get(z).toString());
-                    } else {
-                        break;
+                        FinalityCore.LOGGER.info("You spin");
                     }
-                    FinalityCore.LOGGER.info("You spin");
-                }
+
+
 
 
 

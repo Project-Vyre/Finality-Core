@@ -2,6 +2,7 @@ package com.oekt.finalitycore.item.custom;
 
 import com.oekt.finalitycore.FinalityCore;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -15,12 +16,23 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class PocketSingularity extends Item {
+    public final ItemStackHandler invetory = new ItemStackHandler(300);
+    public static final Capability<IItemHandler> ITEM_HANDLER = CapabilityManager.get(new CapabilityToken<>(){});
+    // Somewhere in your BlockEntity subclass
+    private LazyOptional<IItemHandler> inventoryHandlerLazyOptional = LazyOptional.of(() -> this.invetory);
 
 
     public int getSize() {
@@ -35,6 +47,7 @@ public class PocketSingularity extends Item {
     public PocketSingularity(Properties p_41383_, int size) {
         super(p_41383_);
         this.size = size;
+
     }
 
 //    public ItemStack createStorege(NonNullList<ItemStack> loot) {
@@ -95,4 +108,6 @@ public class PocketSingularity extends Item {
             p_18993_.addFreshEntity(itementity);
         }
     }
+   
+
 }
