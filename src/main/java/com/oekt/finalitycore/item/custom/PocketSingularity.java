@@ -16,14 +16,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.CapabilityToken;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -108,6 +106,26 @@ public class PocketSingularity extends Item {
             p_18993_.addFreshEntity(itementity);
         }
     }
-   
 
+    @Override
+    public @Nullable ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
+        return new ICapabilityProvider() {
+
+            @Override
+            public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+                return ForgeCapabilities.ITEM_HANDLER.orEmpty(cap, inventoryHandlerLazyOptional);
+            }
+            public void AddItemsToInv(List<ItemStack> to_add) {
+                for(ItemStack itemStack : to_add) {
+                    for(int i = 0; i < invetory.getSlots(); i++) {
+                        if(invetory.getStackInSlot(i).isEmpty()) {
+                            invetory.setStackInSlot(i, itemStack);
+                        }
+
+                    }
+                }
+
+            }
+        };
+    }
 }

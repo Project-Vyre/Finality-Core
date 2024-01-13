@@ -44,7 +44,7 @@ public class FinalPickaxe extends PickaxeItem {
             AABB boundingbox = InstlizeAABBBox(blockPos, 3);
             Iterable<BlockPos> list_of_blocks = GetBlocksPosAABB(boundingbox);
             boolean createNewItem = false;
-            NonNullList<ItemStack> to_inv_pocket = NonNullList.createWithCapacity(1080);
+           // NonNullList<ItemStack> to_inv_pocket = NonNullList.createWithCapacity(1080);
             for(BlockPos pos : list_of_blocks) {
                 BlockState blockstat = level.getBlockState(pos);
                 if(blockstat.is(Tags.Blocks.STONE) || blockstat.is(Tags.Blocks.ORES)) {
@@ -53,7 +53,7 @@ public class FinalPickaxe extends PickaxeItem {
                     List<ItemStack> drops =  level.getBlockState(pos).getDrops(lootcontextbuilder);
                     //Adds Drops to Item Stack List
                     if(!addItemLoot(drops, (Player) entity)) {
-                        to_inv_pocket.addAll(drops);
+
                         createNewItem = true;
                     }
 
@@ -63,17 +63,20 @@ public class FinalPickaxe extends PickaxeItem {
             }
             if(createNewItem) {
                 ItemStack pocket_item = new ItemStack(ModItems.POCKET_SINGULARITY.get());
+                if(pocket_item.getItem() instanceof PocketSingularity pocketSingularity) {
+                   // Add loot items to Pocket Singalirty
 
-                CompoundTag nbt = pocket_item.getOrCreateTag();
-                CompoundTag nbt_inv = ContainerHelper.saveAllItems(nbt, to_inv_pocket, true);
+                    if(entity instanceof Player player) {
+                        boolean result = player.getInventory().add(pocket_item);
+                        if(!result); {
+                            dropItemStack(level, player.getX(), player.getY(), player.getZ(), pocket_item);
+                        }
 
-                if(entity instanceof Player player) {
-                    boolean result = player.getInventory().add(pocket_item);
-                    if(!result); {
-                        dropItemStack(level, player.getX(), player.getY(), player.getZ(), pocket_item);
                     }
-
                 }
+
+
+
             }
 
         }
@@ -120,18 +123,18 @@ public class FinalPickaxe extends PickaxeItem {
             Item item = stack.getItem();
 
 
-            if(item == ModItems.POCKET_SINGULARITY.get()) {
+            if(item instanceof PocketSingularity pocketSingularity) {
 
-                NonNullList<ItemStack> pocket_SIBGELARTY_storege = NonNullList.withSize(1080, ItemStack.EMPTY);
-                ContainerHelper.loadAllItems(stack.getOrCreateTag(), pocket_SIBGELARTY_storege);
-                int d = pocket_SIBGELARTY_storege.size() - loot.size();
-                    for (int e = 0; e < pocket_SIBGELARTY_storege.size(); e++) {
-                        ItemStack stackTarget = pocket_SIBGELARTY_storege.get(e);
+                //NonNullList<ItemStack> pocket_SIBGELARTY_storege = NonNullList.withSize(1080, ItemStack.EMPTY);
+
+
+                    for (int e = 0; e < pocketSingularity.invetory.getSlots(); e++) {
+                        ItemStack stackTarget = pocketSingularity.invetory.getStackInSlot(e);
                         if(stackTarget.isEmpty()) {
                             for(ItemStack itemStackLoot : loot) {
                                 if(!itemStackLoot.isEmpty()) {
 
-                                    pocket_SIBGELARTY_storege.set(e, itemStackLoot.copy());
+                                    pocketSingularity.invetory.setStackInSlot(e, itemStackLoot.copy());
                                     break;
                                 } else {
                                     break;
@@ -146,7 +149,7 @@ public class FinalPickaxe extends PickaxeItem {
 
 
 
-                ContainerHelper.saveAllItems(stack.getOrCreateTag(), pocket_SIBGELARTY_storege, true);
+
                 stack.getOrCreateTag().putBoolean("modifyed", true);
                 stop = true;
                 break;
