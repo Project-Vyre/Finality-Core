@@ -2,6 +2,8 @@ package com.oekt.finality.item.custom;
 
 import com.oekt.finality.Finality;
 import com.oekt.finality.item.ModItems;
+import net.minecraft.client.renderer.block.model.ItemOverride;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

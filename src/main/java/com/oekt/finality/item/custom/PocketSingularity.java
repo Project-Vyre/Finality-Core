@@ -73,7 +73,7 @@ public class PocketSingularity extends Item {
             }
 
         }
-
+       // this.clear();
         return InteractionResultHolder.consume(ItemStack.EMPTY);
     }
 
@@ -151,6 +151,12 @@ public class PocketSingularity extends Item {
             }
         }
         return count;
+    }
+    public void clear() {
+        for(int i = 0; i < this.invetory.getSlots(); i++ ) {
+            this.invetory.setStackInSlot(i, ItemStack.EMPTY);
+        }
+
     }
 
 }

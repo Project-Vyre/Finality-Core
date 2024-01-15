@@ -3,6 +3,11 @@ package com.oekt.finality;
 import com.mojang.logging.LogUtils;
 import com.oekt.finality.block.ModBlocks;
 import com.oekt.finality.item.ModItems;
+import com.oekt.finality.item.custom.FinalPickaxe;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -75,6 +80,11 @@ public class Finality
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
+            event.enqueueWork(() -> setPropertyOverride(ModItems.FINAL_PICKAXE.get(), new ResourceLocation(MODID, "hammer"), (itemstack, world, enitty, d) -> {
+                if (itemstack.getItem() instanceof FinalPickaxe)
+                    return itemstack.getOrCreateTag().getBoolean("hammer") ? 1 : 0;
+                return 0;
+            }));
             // Some client setup code
             //ItemBlockRenderTypes.setRenderLayer(ModBlocks.LIVING_NETHERWART_CROP.get(), RenderType.cutout());
         }
@@ -83,4 +93,8 @@ public class Finality
 //            PlayerEvent.HarvestCheck
 //        }
     }
+    public static void setPropertyOverride(Item itemProvider, ResourceLocation override, ItemPropertyFunction propertyGetter) {
+        ItemProperties.register(itemProvider.asItem(), override, propertyGetter);
+    }
+
 }
