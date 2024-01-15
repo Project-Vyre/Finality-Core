@@ -1,6 +1,0 @@
-{
-  "parent": "item/handheld",
-  "textures": {
-    "layer0": "finalitycore:item/final_sword_gui"
-  }
-}
