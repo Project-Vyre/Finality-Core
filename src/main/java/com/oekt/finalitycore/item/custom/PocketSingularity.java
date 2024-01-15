@@ -3,10 +3,8 @@ package com.oekt.finalitycore.item.custom;
 import com.oekt.finalitycore.FinalityCore;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EntityType;
@@ -20,31 +18,30 @@ import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class PocketSingularity extends Item {
-    public final ItemStackHandler invetory = new ItemStackHandler(300);
+    public final ItemStackHandler invetory = new ItemStackHandler(1080);
     public static final Capability<IItemHandler> ITEM_HANDLER = CapabilityManager.get(new CapabilityToken<>(){});
     // Somewhere in your BlockEntity subclass
+//    boolean added = false;
     private LazyOptional<IItemHandler> inventoryHandlerLazyOptional = LazyOptional.of(() -> this.invetory);
 
 
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    int size = 0;
-    public PocketSingularity(Properties p_41383_, int size) {
+//    public int getSize() {
+//        return size;
+//    }
+//
+//    public void setSize(int size) {
+//        this.size = size;
+//    }
+//
+//    int size = 0;
+    public PocketSingularity(Properties p_41383_) {
         super(p_41383_);
-        this.size = size;
+
 
     }
 
@@ -59,38 +56,43 @@ public class PocketSingularity extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
-        NonNullList<ItemStack> to_inv_pocket = NonNullList.withSize(1080, ItemStack.EMPTY);
+        if(level.isClientSide()) { return InteractionResultHolder.pass(ItemStack.EMPTY);}
+
+
+//        if(added) { return InteractionResultHolder.consume(ItemStack.EMPTY); }
         ItemStack stack = player.getItemInHand(interactionHand);
        // FinalityCore.LOGGER.info(stack.getOrCreateTag().toString());
-        ContainerHelper.loadAllItems(stack.getOrCreateTag().copy(), to_inv_pocket);
+//        ContainerHelper.loadAllItems(stack.getOrCreateTag().copy(), to_inv_pocket);
         //FinalityCore.LOGGER.info(to_inv_pocket.toString());
-        for(ItemStack itemStack : to_inv_pocket) {
-
-            if(!player.getInventory().add(itemStack)) {
-                dropItemStack(level, player.getX(), player.getY(), player.getZ(), itemStack);
+        for(int e = 0; e < this.invetory.getSlots(); e++) {
+            ItemStack itemStackInSlot = this.invetory.getStackInSlot(e);
+            if(!itemStackInSlot.isEmpty()) {
+                if(!player.getInventory().add(itemStackInSlot)) {
+                    dropItemStack(level, player.getX(), player.getY(), player.getZ(), itemStackInSlot);
+                }
             }
+
         }
-        this.setSize(get_items(to_inv_pocket));
+
         return InteractionResultHolder.consume(ItemStack.EMPTY);
     }
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> componentList, TooltipFlag tooltipFlag) {
-        NonNullList<ItemStack> to_inv_pocket = NonNullList.withSize(1080, ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(stack.getOrCreateTag().copy(), to_inv_pocket);
 
-        componentList.add(Component.literal("Size: " + get_items(to_inv_pocket) + "/1080").withStyle(ChatFormatting.GRAY));
+
+        componentList.add(Component.literal("Size: " + this.getItemCount() + "/1080").withStyle(ChatFormatting.GRAY));
         super.appendHoverText(stack, level, componentList, tooltipFlag);
     }
-    int get_items(NonNullList<ItemStack> itemStacks) {
-        int count = 0;
-        for(int i = 0; i < itemStacks.size(); i++) {
-            if(!itemStacks.get(i).isEmpty()) {
-                count++;
-            }
-        }
-        return count;
-    }
+//    int get_items(NonNullList<ItemStack> itemStacks) {
+//        int count = 0;
+//        for(int i = 0; i < itemStacks.size(); i++) {
+//            if(!itemStacks.get(i).isEmpty()) {
+//                count++;
+//            }
+//        }
+//        return count;
+//    }
     public static void dropItemStack(Level p_18993_, double p_18994_, double p_18995_, double p_18996_, ItemStack p_18997_) {
         double d0 = (double) EntityType.ITEM.getWidth();
         double d1 = 1.0D - d0;
@@ -115,17 +117,40 @@ public class PocketSingularity extends Item {
             public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
                 return ForgeCapabilities.ITEM_HANDLER.orEmpty(cap, inventoryHandlerLazyOptional);
             }
-            public void AddItemsToInv(List<ItemStack> to_add) {
-                for(ItemStack itemStack : to_add) {
-                    for(int i = 0; i < invetory.getSlots(); i++) {
-                        if(invetory.getStackInSlot(i).isEmpty()) {
-                            invetory.setStackInSlot(i, itemStack);
-                        }
 
-                    }
+
+        };
+    }
+    public boolean addItemsToInv(List<ItemStack> to_add) {
+        boolean empty = true;
+        for(ItemStack itemStack : to_add) {
+            for(int i = 0; i < invetory.getSlots(); i++) {
+                if(invetory.getStackInSlot(i).isEmpty()) {
+                    empty = false;
+                    invetory.setStackInSlot(i, itemStack.copy());
+
+                    break;
                 }
 
             }
-        };
+            FinalityCore.LOGGER.info(invetory.toString());
+        }
+        FinalityCore.LOGGER.info(invetory.toString());
+        return empty;
+
     }
+    public ItemStackHandler getInvetory() {
+        return this.invetory;
+    }
+    public int getItemCount() {
+        int count = 0;
+        for(int i = 0; i < this.invetory.getSlots(); i++) {
+            ItemStack stack = this.invetory.getStackInSlot(i);
+            if(!stack.isEmpty()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
 }
