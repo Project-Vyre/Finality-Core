@@ -28,6 +28,7 @@ import java.util.List;
 
 public class FinalPickaxe extends PickaxeItem {
     public List<ItemStack> drops;
+    public boolean disable = true;
 
     public List<ItemStack> allDrops = new ArrayList<>();
     public FinalPickaxe(Tier p_42961_, int p_42962_, float p_42963_, Properties p_42964_) {
@@ -102,7 +103,7 @@ public class FinalPickaxe extends PickaxeItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
         ItemStack stack = player.getItemInHand(interactionHand);
         CompoundTag nbt = stack.getOrCreateTag();
-        if(player.isShiftKeyDown()) {
+        if(player.isShiftKeyDown() && !disable) {
             nbt.putBoolean("hammer", !nbt.getBoolean("hammer"));
             player.setMainArm(HumanoidArm.RIGHT);
         }
