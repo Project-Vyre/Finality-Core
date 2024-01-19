@@ -5,6 +5,8 @@ import com.oekt.finality.block.ModBlocks;
 import com.oekt.finality.item.ModItems;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -76,6 +78,9 @@ public class Finality
             // Some client setup code
             //ItemBlockRenderTypes.setRenderLayer(ModBlocks.LIVING_NETHERWART_CROP.get(), RenderType.cutout());
         }
-
+//        @SubscribeEvent
+//        public static void onSwing(PlayerInteractEvent. event) {
+//            PlayerEvent.HarvestCheck
+//        }
     }
 }

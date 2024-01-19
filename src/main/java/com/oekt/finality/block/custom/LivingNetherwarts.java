@@ -42,7 +42,7 @@ public class LivingNetherwarts extends CropBlock {
 
     @Override
     protected ItemLike getBaseSeedId() {
-        return ModItems.LIVING_NETHERWART_SEED.get();
+        return ModItems.LIVING_NETHER_WART_SPORES.get();
     }
 
     @Override
