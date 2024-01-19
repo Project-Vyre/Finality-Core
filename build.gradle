@@ -173,6 +173,10 @@ dependencies {
     implementation fg.deobf("curse.maven:create-328085:4835190") { transitive = false }
     implementation fg.deobf("curse.maven:text-animator-881778:4676199")
     implementation fg.deobf("curse.maven:create-328085:4835190")
+
+    implementation fg.deobf("curse.maven:kubejs-238086:5034243")
+    implementation fg.deobf("curse.maven:rhino-416294:4953345")
+    implementation fg.deobf("curse.maven:architectury-api-419699:4555749")
 //    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
 //    implementation(fg.deobf("com.tterrag.registrate:Registrate:EnderIO-6.0.1371"))
 //    jarJar(group: 'com.tterrag.registrate', name: 'Registrate', version: {registrate_version})

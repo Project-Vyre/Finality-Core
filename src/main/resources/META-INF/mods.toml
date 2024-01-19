@@ -69,3 +69,9 @@ mandatory=true
 versionRange="[0.5.1.f,)"
 ordering="NONE"
 side="BOTH"
+[[dependencies.finality]]
+modId="kubejs"
+mandatory=true
+versionRange="[1902.6.2,)"
+ordering="NONE"
+side="BOTH"
