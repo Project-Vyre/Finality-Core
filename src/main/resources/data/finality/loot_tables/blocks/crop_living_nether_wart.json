@@ -16,18 +16,18 @@
               "type": "minecraft:item",
               "conditions": [
                 {
-                  "block": "finalitycore:crop_living_nether_wart",
+                  "block": "finality:crop_living_nether_wart",
                   "condition": "minecraft:block_state_property",
                   "properties": {
                     "age": "3"
                   }
                 }
               ],
-              "name": "finalitycore:living_nether_wart"
+              "name": "finality:living_nether_wart"
             },
             {
               "type": "minecraft:item",
-              "name": "finalitycore:living_nether_wart_seed"
+              "name": "finality:living_nether_wart_spores"
             }
           ]
         }
@@ -38,7 +38,7 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
-          "block": "finalitycore:crop_living_nether_wart",
+          "block": "finality:crop_living_nether_wart",
           "condition": "minecraft:block_state_property",
           "properties": {
             "age": "3"
@@ -59,7 +59,7 @@
               }
             }
           ],
-          "name": "finalitycore:living_nether_wart_seed"
+          "name": "finality:living_nether_wart_spores"
         }
       ],
       "rolls": 1.0
