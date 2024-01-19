@@ -161,4 +161,5 @@ public class FinalPickaxe extends PickaxeItem {
     public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
         return 0;
     }
+
 }
