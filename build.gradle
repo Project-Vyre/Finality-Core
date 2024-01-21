@@ -156,6 +156,9 @@ repositories {
         url 'https://maven.tterrag.com'
     }
 
+    repositories {
+        maven { url 'https://maven.blamejared.com' }
+    }
 
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so:
     // flatDir {
@@ -177,6 +180,11 @@ dependencies {
     implementation fg.deobf("curse.maven:kubejs-238086:5034243")
     implementation fg.deobf("curse.maven:rhino-416294:4953345")
     implementation fg.deobf("curse.maven:architectury-api-419699:4555749")
+
+
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+
 //    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
 //    implementation(fg.deobf("com.tterrag.registrate:Registrate:EnderIO-6.0.1371"))
 //    jarJar(group: 'com.tterrag.registrate', name: 'Registrate', version: {registrate_version})

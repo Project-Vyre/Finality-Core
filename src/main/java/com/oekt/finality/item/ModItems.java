@@ -17,6 +17,7 @@ public class ModItems {
     public static final RegistryObject<Item> LIVING_NETHER_WART_SPORES = ITEMS.register("living_nether_wart_spores", () -> new ItemNameBlockItem(ModBlocks.LIVING_NETHERWART_CROP.get(), new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS).stacksTo(64)));
     public static final RegistryObject<Item> LIVING_NETHER_WART = ITEMS.register("living_nether_wart", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS).stacksTo(64)));
 
+   // public static final RegistryObject<Item> TOMB_OF_FINALITY = ITEMS.register("tome_of_finality", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS).stacksTo(1)));
     public static final RegistryObject<Item> POCKET_SINGULARITY = ITEMS.register("pocket_singularity", () -> new PocketSingularity(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS).stacksTo(64)));
     public static final RegistryObject<Item> POWERFUL_SWORD = ITEMS.register("final_sword", () -> new PowerfulSword(Tiers.NETHERITE, 63, 99, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT).stacksTo(1)));
 
