@@ -9,8 +9,14 @@
         },
         {
             "type": "patchouli:text",
-            "text": "The two easiest options for generating FE would be the following blocks: $(li)Alternator (Create Crafts & Additions) $(li)Stirling Dynamo (Thermal Series) $(br2)You can then store this energy with either the Accumulator or a Redstone Flux Cell. $(br2)You can see the items individually over the next few pages."
+            "text": "The two easiest options for generating FE would be the following blocks: $(li)Alternator (Create Crafts & Additions) $(li)Stirling Dynamo (Thermal Series) $(br2)You can then store this energy with either the Accumulator or a Redstone Flux Cell. $(br2)You can see the items individually over the next few pages.",
         },
+        {
+            "type": "patchouli:text",
+            "text": "Something cool about thermal",
+            "flag": "mod:thermal"
+        },
+
         {
             "type": "patchouli:spotlight",
             "item": "createaddition:alternator",
