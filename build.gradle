@@ -180,7 +180,21 @@ dependencies {
     implementation fg.deobf("curse.maven:kubejs-238086:5034243")
     implementation fg.deobf("curse.maven:rhino-416294:4953345")
     implementation fg.deobf("curse.maven:architectury-api-419699:4555749")
-
+    // Modpack mods
+    runtimeOnly fg.deobf("curse.maven:l_ender-s-cataclysm-551586:5039717")
+    runtimeOnly fg.deobf("curse.maven:archaeology-api-950822:4996103")
+    runtimeOnly fg.deobf("curse.maven:citadel-331936:4556677")
+    runtimeOnly fg.deobf("curse.maven:curios-309927:5049407")
+    runtimeOnly fg.deobf("curse.maven:quark-243121:4812006")
+    runtimeOnly fg.deobf("curse.maven:autoreglib-250363:4100299")
+    runtimeOnly fg.deobf("curse.maven:ob-aquamirae-536254:4522264")
+    runtimeOnly fg.deobf("curse.maven:obscure-api-638417:4522272")
+    runtimeOnly fg.deobf("curse.maven:createaddition-439890:4929703")
+    runtimeOnly fg.deobf("curse.maven:endremastered-404183:4046639")
+    runtimeOnly fg.deobf("curse.maven:eccentric-tome-597522:4852809")
+    runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:5051241")
+    runtimeOnly fg.deobf("curse.maven:enigmatic-legacy-336184:4392950")
+    runtimeOnly fg.deobf("curse.maven:caelus-308989:3929284")
 
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
