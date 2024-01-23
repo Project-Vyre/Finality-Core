@@ -2,7 +2,7 @@
   "parent": "minecraft:block/crop",
   "render_type": "cutout",
   "textures": {
-    "crop": "finality:block/living_netherwarts_stage3"
+    "crop": "finality:block/living_nether_warts_stage3"
   }
 
 }
