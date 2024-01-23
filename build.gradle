@@ -17,6 +17,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
     id 'java-library'
 
 }
@@ -166,6 +167,11 @@ repositories {
     // }
 }
 
+mixin {
+    add sourceSets.main, "finality-refmap.json"
+    config "finality.mixins.json"
+}
+
 dependencies {
     // Specify the version of Minecraft to use.
     // Any artifact can be supplied so long as it has a "userdev" classifier artifact and is a compatible patcher artifact.
@@ -173,6 +179,9 @@ dependencies {
     // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
+    
     implementation fg.deobf("curse.maven:create-328085:4835190") { transitive = false }
     implementation fg.deobf("curse.maven:text-animator-881778:4676199")
     implementation fg.deobf("curse.maven:create-328085:4835190")
