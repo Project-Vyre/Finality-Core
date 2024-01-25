@@ -75,3 +75,9 @@ mandatory=true
 versionRange="[1902.6.2,)"
 ordering="NONE"
 side="BOTH"
+[[dependencies.finality]]
+modId="zume"
+mandatory=true
+versionRange="[0.12.0,)"
+ordering="NONE"
+side="BOTH"
