@@ -2,8 +2,12 @@ package com.oekt.finality;
 
 import com.mojang.logging.LogUtils;
 import com.oekt.finality.block.ModBlocks;
+import com.oekt.finality.enitty.ModEnittys;
+import com.oekt.finality.enitty.render.SwordPorjetileRender;
 import com.oekt.finality.item.ModItems;
 import com.oekt.finality.item.custom.FinalPickaxe;
+import net.minecraft.client.renderer.entity.ArrowRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.resources.ResourceLocation;
@@ -51,7 +55,7 @@ public class Finality
         ModBlocks.BLOCKS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
         ModItems.ITEMS.register(modEventBus);
-
+        ModEnittys.ENTITY_TYPES.register(modEventBus);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -85,6 +89,7 @@ public class Finality
                     return itemstack.getOrCreateTag().getBoolean("hammer") ? 1 : 0;
                 return 0;
             }));
+            EntityRenderers.register(ModEnittys.SWORD_PORJECTILE.get(), SwordPorjetileRender::new);
             // Some client setup code
             //ItemBlockRenderTypes.setRenderLayer(ModBlocks.LIVING_NETHERWART_CROP.get(), RenderType.cutout());
         }
