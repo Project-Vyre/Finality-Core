@@ -28,7 +28,7 @@ public class SwordPorjetile extends Projectile {
 
     @Override
     public void tick() {
-        if(DESPAWN_TIME <= 0) {
+        if(timer <= 0) {
             this.discard();
 
         } else {
