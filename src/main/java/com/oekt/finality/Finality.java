@@ -3,6 +3,7 @@ package com.oekt.finality;
 import com.mojang.logging.LogUtils;
 import com.oekt.finality.block.ModBlocks;
 import com.oekt.finality.enitty.ModEnittys;
+import com.oekt.finality.enitty.custom.SwordPorjetile;
 import com.oekt.finality.enitty.render.SwordPorjetileRender;
 import com.oekt.finality.item.ModItems;
 import com.oekt.finality.item.custom.FinalPickaxe;
@@ -11,7 +12,9 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -77,6 +80,7 @@ public class Finality
         LOGGER.info("HELLO from server starting");
     }
 
+
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
@@ -93,10 +97,7 @@ public class Finality
             // Some client setup code
             //ItemBlockRenderTypes.setRenderLayer(ModBlocks.LIVING_NETHERWART_CROP.get(), RenderType.cutout());
         }
-//        @SubscribeEvent
-//        public static void onSwing(PlayerInteractEvent. event) {
-//            PlayerEvent.HarvestCheck
-//        }
+
     }
     public static void setPropertyOverride(Item itemProvider, ResourceLocation override, ItemPropertyFunction propertyGetter) {
         ItemProperties.register(itemProvider.asItem(), override, propertyGetter);

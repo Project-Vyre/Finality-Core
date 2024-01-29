@@ -1,13 +1,19 @@
 package com.oekt.finality.item.custom;
 
+import com.oekt.finality.Finality;
 import com.oekt.finality.enitty.ModEnittys;
 import com.oekt.finality.enitty.custom.SwordPorjetile;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class PowerfulSword extends SwordItem {
     public PowerfulSword(Tier p_43269_, int p_43270_, float p_43271_, Properties p_43272_) {
@@ -28,8 +34,16 @@ public class PowerfulSword extends SwordItem {
         porjectile.setPos(player.position());
         //porjectile.setDeltaMovement(0, 1, 0);
 
-        porjectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 1.0F, 3.0F, 1.0F);
+        porjectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 3.0F, 1.0F);
         level.addFreshEntity(porjectile);
         return super.onEntitySwing(stack, player);
     }
+
+
+
+
+
+
+
+
 }

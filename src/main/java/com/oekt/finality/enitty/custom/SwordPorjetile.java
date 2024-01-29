@@ -2,8 +2,10 @@ package com.oekt.finality.enitty.custom;
 
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -47,21 +49,26 @@ public class SwordPorjetile extends AbstractHurtingProjectile {
             timer--;
         }
 
-        Vec3 vec3 = this.getDeltaMovement();
-        if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
-            double d0 = vec3.horizontalDistance();
-            this.setYRot((float)(Mth.atan2(vec3.x, vec3.z) * (double)(180F / (float)Math.PI)));
-            this.setXRot((float)(Mth.atan2(vec3.y, d0) * (double)(180F / (float)Math.PI)));
-            this.yRotO = this.getYRot();
-            this.xRotO = this.getXRot();
-        }
+
+
 
         super.tick();
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult p_36757_) {
-        super.onHitEntity(p_36757_);
+    protected void onHitEntity(EntityHitResult result) {
+        Entity target = result.getEntity();
+        if(target instanceof LivingEntity entity) {
+            if(target instanceof Player) {
+                super.onHitEntity(result);
+                return;
+            } else {
+                entity.setHealth(0);
+            }
+
+        }
+
+        super.onHitEntity(result);
     }
     // in ExplosiveArrowEntity.java
     @Override
