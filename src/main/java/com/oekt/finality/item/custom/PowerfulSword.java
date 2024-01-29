@@ -25,8 +25,10 @@ public class PowerfulSword extends SwordItem {
     public boolean onEntitySwing(ItemStack stack, LivingEntity player) {
         Level level = player.level;
         SwordPorjetile porjectile = new SwordPorjetile(ModEnittys.SWORD_PORJECTILE.get(), player.level);
+        porjectile.setPos(player.position());
+        //porjectile.setDeltaMovement(0, 1, 0);
 
-        porjectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 3.0F, 1.0F);
+        porjectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 1.0F, 3.0F, 1.0F);
         level.addFreshEntity(porjectile);
         return super.onEntitySwing(stack, player);
     }
