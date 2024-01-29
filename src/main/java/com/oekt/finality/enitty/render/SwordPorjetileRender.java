@@ -16,7 +16,7 @@ public class SwordPorjetileRender extends EntityRenderer<SwordPorjetile> {
     public SwordPerjectileModel model;
     public SwordPorjetileRender(EntityRendererProvider.Context manager) {
         super(manager);
-        this.model = new SwordPerjectileModel();
+        this.model = new SwordPerjectileModel(SwordPerjectileModel.createBodyLayer().bakeRoot());
 
     }
 
