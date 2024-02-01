@@ -34,6 +34,8 @@ public class SwordPerjectileModel<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r3 = bb_main.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(0, 14).addBox(-9.0F, -1.0F, -1.0F, 9.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(7.0F, -13.0F, 2.0F, 0.0F, -0.7854F, 0.0F));
 
+
+
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
 

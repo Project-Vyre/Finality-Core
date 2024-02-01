@@ -29,6 +29,7 @@ public class SwordPorjetileRender extends EntityRenderer<SwordPorjetile> {
         matrixStackIn.pushPose();
         VertexConsumer VertexConsumer = buffferIn.getBuffer(this.model.renderType(getTextureLocation(swordPorjetile)));
         this.model.renderToBuffer(matrixStackIn, VertexConsumer, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+
         matrixStackIn.popPose();
         super.render(swordPorjetile, yaw, partialTicks, matrixStackIn, buffferIn, packedLightIn);
     }

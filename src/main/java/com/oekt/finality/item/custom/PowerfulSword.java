@@ -4,8 +4,10 @@ import com.oekt.finality.Finality;
 import com.oekt.finality.enitty.ModEnittys;
 import com.oekt.finality.enitty.custom.SwordPorjetile;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
@@ -23,7 +25,7 @@ public class PowerfulSword extends SwordItem {
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity entity, LivingEntity livingEntity) {
         entity.setHealth(0);
-
+        entity.die(DamageSource.playerAttack((Player) livingEntity));
         return false;
     }
 
@@ -32,9 +34,11 @@ public class PowerfulSword extends SwordItem {
         Level level = player.level;
         SwordPorjetile porjectile = new SwordPorjetile(ModEnittys.SWORD_PORJECTILE.get(), player.level);
         porjectile.setPos(player.position());
+        porjectile.setOwner(player);
         //porjectile.setDeltaMovement(0, 1, 0);
 
-        porjectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 3.0F, 1.0F);
+        porjectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 1.0F, 3.0F, 1.0F);
+
         level.addFreshEntity(porjectile);
         return super.onEntitySwing(stack, player);
     }
