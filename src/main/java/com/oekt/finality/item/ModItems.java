@@ -2,6 +2,7 @@ package com.oekt.finality.item;
 
 import com.oekt.finality.Finality;
 import com.oekt.finality.block.ModBlocks;
+import com.oekt.finality.item.custom.FinalityCannon;
 import com.oekt.finality.item.custom.PocketSingularity;
 import com.oekt.finality.item.custom.FinalPickaxe;
 import com.oekt.finality.item.custom.PowerfulSword;
@@ -22,4 +23,6 @@ public class ModItems {
     public static final RegistryObject<Item> POWERFUL_SWORD = ITEMS.register("final_sword", () -> new PowerfulSword(Tiers.NETHERITE, 63, 99, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT).stacksTo(1)));
 
     public static final RegistryObject<Item> FINAL_PICKAXE = ITEMS.register("final_pickaxe", () -> new FinalPickaxe(Tiers.NETHERITE, 99, 99, new Item.Properties().tab(CreativeModeTab.TAB_TOOLS).stacksTo(1)));
+
+    public static final RegistryObject<Item> FINAL_POTATO_CANNON = ITEMS.register("final_potato_cannon", () -> new FinalityCannon(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS).stacksTo(1)));
 }
