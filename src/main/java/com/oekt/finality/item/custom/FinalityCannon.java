@@ -8,8 +8,5 @@ public class FinalityCannon extends PotatoCannonItem {
         super(properties);
     }
 
-    @Override
-    public void setDamage(ItemStack stack, int damage) {
-        super.setDamage(stack, damage);
-    }
+
 }
