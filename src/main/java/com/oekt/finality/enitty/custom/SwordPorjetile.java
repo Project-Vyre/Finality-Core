@@ -1,5 +1,6 @@
 package com.oekt.finality.enitty.custom;
 
+import com.oekt.finality.Finality;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.util.Mth;
@@ -19,12 +20,18 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
+import java.util.Objects;
+
 public class SwordPorjetile extends Projectile {
     int DESPAWN_TIME = 300;
     int timer = 600;
 
+    int tickspeed = 3;
+
     public SwordPorjetile(EntityType<? extends Projectile> p_37248_, Level p_37249_) {
+
         super(p_37248_, p_37249_);
+
     }
 
 
@@ -44,6 +51,7 @@ public class SwordPorjetile extends Projectile {
     public void tick() {
         super.tick();
         if (!this.level.isClientSide) {
+
             if(timer <= 0) {
                 // MobGriffing check
                 Explosion.BlockInteraction explosion$blockinteraction = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
@@ -57,7 +65,7 @@ public class SwordPorjetile extends Projectile {
 
 
         }
-        // minecraft peojettiles movement code are not included within the projectile class
+        // minecraft projectile movement code are not included within the projectile class
         Entity entity = this;
         if (!this.level.isClientSide || !entity.isRemoved() && this.level.hasChunkAt(this.blockPosition())) {
 
@@ -67,17 +75,24 @@ public class SwordPorjetile extends Projectile {
                 this.onHit(hitresult);
             }
 
+
+//            Vec3 oldDeltaMovement = this.getDeltaMovement();
+
+//            //double horzDist = oldDeltaMovement.horizontalDistance();
+//            ProjectileUtil.rotateTowardsMovement(this, 0.2F);
+//            //ProjectileUtil.rotateTowardsMovement(this, 0.3F);
+//            Finality.LOGGER.info(String.valueOf(this.ownedBy(this)));
+//            //Vec3 facingMuti = Objects.requireNonNull(this.getOwner()).getLookAngle();
+//
+//            this.setDeltaMovement(oldDeltaMovement.scale(0.99f));
+//            Vec3 newDeltaMovement = this.getDeltaMovement();
+
+            Vec3 oldDeltaMovement = this.getDeltaMovement();
+            double newX = this.getX() + oldDeltaMovement.x;
+            double newY = this.getY() + oldDeltaMovement.y;
+            double newZ = this.getZ() + oldDeltaMovement.z;
+            this.setPos(newX, newY, newZ);
             this.checkInsideBlocks();
-            Vec3 vec33 = this.getDeltaMovement();
-            double d0 = this.getX() + vec33.x;
-            double d1 = this.getY() + vec33.y;
-            double d2 = this.getZ() + vec33.z;
-            ProjectileUtil.rotateTowardsMovement(this, 0.3F);
-
-            Vec3 facingMuti = entity.getLookAngle();
-            this.setDeltaMovement(vec33.add(facingMuti.scale(2)));
-
-            //this.setPos(d0, d1, d2);
         } else {
             this.discard();
         }
