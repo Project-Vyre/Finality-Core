@@ -80,7 +80,7 @@ public class SwordPorjetile extends Projectile {
 
 //            //double horzDist = oldDeltaMovement.horizontalDistance();
 //            ProjectileUtil.rotateTowardsMovement(this, 0.2F);
-//            //ProjectileUtil.rotateTowardsMovement(this, 0.3F);
+
 //            Finality.LOGGER.info(String.valueOf(this.ownedBy(this)));
 //            //Vec3 facingMuti = Objects.requireNonNull(this.getOwner()).getLookAngle();
 //
@@ -91,6 +91,13 @@ public class SwordPorjetile extends Projectile {
             double newX = this.getX() + oldDeltaMovement.x;
             double newY = this.getY() + oldDeltaMovement.y;
             double newZ = this.getZ() + oldDeltaMovement.z;
+           // ProjectileUtil.rotateTowardsMovement(this, 0.3f);
+            //rotate towords movement
+//            this.setYRot((float)(Mth.atan2(-newY, -newZ) * (double)(180F / (float)Math.PI)));
+//            this.setXRot((float)(Mth.atan2(newY, oldDeltaMovement.horizontalDistance()) * (double)(180F / (float)Math.PI)));
+//            this.setXRot(lerpRotation(this.xRotO, this.getXRot()));
+//            this.setYRot(lerpRotation(this.yRotO, this.getYRot()));
+            this.setXRot(lerpRotation(this.xRotO, this.getXRot()+90));
             this.setPos(newX, newY, newZ);
             this.checkInsideBlocks();
         } else {

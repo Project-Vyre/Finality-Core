@@ -2,6 +2,7 @@ package com.oekt.finality.enitty.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import com.oekt.finality.Finality;
 import com.oekt.finality.enitty.ModModelLayers;
 import com.oekt.finality.enitty.custom.SwordPerjectileModel;
@@ -10,6 +11,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 public class SwordPorjetileRender extends EntityRenderer<SwordPorjetile> {
     public static final ResourceLocation TEXTURE = new ResourceLocation(Finality.MODID, "textures/entity/placeholder.png");
@@ -27,6 +29,10 @@ public class SwordPorjetileRender extends EntityRenderer<SwordPorjetile> {
     @Override
     public void render(SwordPorjetile swordPorjetile, float yaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource buffferIn, int packedLightIn) {
         matrixStackIn.pushPose();
+        // From Arrow renderer
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(partialTicks, swordPorjetile.yRotO, swordPorjetile.getYRot()) - 90.0F));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks, swordPorjetile.xRotO, swordPorjetile.getXRot())));
+        //matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(45.0F));
         VertexConsumer VertexConsumer = buffferIn.getBuffer(this.model.renderType(getTextureLocation(swordPorjetile)));
         this.model.renderToBuffer(matrixStackIn, VertexConsumer, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 

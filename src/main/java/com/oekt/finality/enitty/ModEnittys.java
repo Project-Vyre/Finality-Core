@@ -13,5 +13,5 @@ public class ModEnittys {
         public static DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Finality.MODID);
 
     public static final RegistryObject<EntityType<SwordPorjetile>> SWORD_PORJECTILE = ENTITY_TYPES.register("sword_projectile",
-            () -> EntityType.Builder.of(SwordPorjetile::new, MobCategory.MISC).sized(1F, 1F).build("sword_projectile"));
+            () -> EntityType.Builder.of(SwordPorjetile::new, MobCategory.MISC).sized(1F, 0.5F).build("sword_projectile"));
 }

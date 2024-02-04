@@ -34,7 +34,7 @@ public class PowerfulSword extends SwordItem {
         if(player.level.isClientSide) {return false;}
         Level level = player.level;
         SwordPorjetile porjectile = new SwordPorjetile(ModEnittys.SWORD_PORJECTILE.get(), player.level);
-        porjectile.setPos(player.position());
+        porjectile.setPos(player.position().add(0, 1, 0));
         porjectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.0F, 1.0F);
         porjectile.setOwner(player);
         //porjectile.setDeltaMovement(0, 1, 0);
