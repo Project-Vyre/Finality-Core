@@ -7,6 +7,7 @@ import com.oekt.finality.enitty.custom.SwordPorjetile;
 import com.oekt.finality.enitty.render.SwordPorjetileRender;
 import com.oekt.finality.item.ModItems;
 import com.oekt.finality.item.custom.FinalPickaxe;
+import net.bettercombat.api.client.BetterCombatClientEvents;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;

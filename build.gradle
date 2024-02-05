@@ -177,7 +177,7 @@ dependencies {
     implementation fg.deobf("curse.maven:kubejs-238086:5034243")
     implementation fg.deobf("curse.maven:rhino-416294:4953345")
     implementation fg.deobf("curse.maven:architectury-api-419699:4555749")
-    //implementation fg.deobf("curse.maven:better-combat-by-daedelus-639842:4534619")
+    implementation fg.deobf("curse.maven:better-combat-by-daedelus-639842:4534619")
     implementation fg.deobf("curse.maven:playeranimator-658587:4418149")
     implementation fg.deobf("curse.maven:cloth-config-348521:4973444")
 
