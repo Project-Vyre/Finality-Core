@@ -4,6 +4,7 @@ import com.oekt.finality.Finality;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,9 +29,12 @@ public class SwordPorjetile extends Projectile {
 
     int tickspeed = 3;
 
+    float randomX;
+
     public SwordPorjetile(EntityType<? extends Projectile> p_37248_, Level p_37249_) {
 
         super(p_37248_, p_37249_);
+        randomX =  RandomSource.create().nextInt(0, 360);
 
     }
 
@@ -97,7 +101,8 @@ public class SwordPorjetile extends Projectile {
 //            this.setXRot((float)(Mth.atan2(newY, oldDeltaMovement.horizontalDistance()) * (double)(180F / (float)Math.PI)));
 //            this.setXRot(lerpRotation(this.xRotO, this.getXRot()));
 //            this.setYRot(lerpRotation(this.yRotO, this.getYRot()));
-            this.setXRot(lerpRotation(this.xRotO, this.getXRot()+90));
+//            this.setXRot(lerpRotation(this.xRotO, this.getXRot()+90));
+            this.setXRot(randomX);
             this.setPos(newX, newY, newZ);
             this.checkInsideBlocks();
         } else {

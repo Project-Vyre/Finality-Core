@@ -30,9 +30,9 @@ public class SwordPorjetileRender extends EntityRenderer<SwordPorjetile> {
     public void render(SwordPorjetile swordPorjetile, float yaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource buffferIn, int packedLightIn) {
         matrixStackIn.pushPose();
         // From Arrow renderer
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(partialTicks, swordPorjetile.yRotO, swordPorjetile.getYRot()) - 90.0F));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks, swordPorjetile.xRotO, swordPorjetile.getXRot())));
-        //matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(45.0F));
+        //matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(partialTicks, swordPorjetile.yRotO, swordPorjetile.getYRot()) - 90.0F));
+        //matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks, swordPorjetile.xRotO, swordPorjetile.getXRot())));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(swordPorjetile.xRotO));
         VertexConsumer VertexConsumer = buffferIn.getBuffer(this.model.renderType(getTextureLocation(swordPorjetile)));
         this.model.renderToBuffer(matrixStackIn, VertexConsumer, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 
