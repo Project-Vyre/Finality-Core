@@ -4,11 +4,12 @@ import com.oekt.finality.Finality;
 
 import com.oekt.finality.enitty.ModEnittys;
 import com.oekt.finality.enitty.custom.SwordPorjetile;
+import com.oekt.finality.networking.ModMesseges;
+import com.oekt.finality.networking.packet.SwordPacket;
 import net.bettercombat.api.AttackHand;
 import net.bettercombat.api.client.BetterCombatClientEvents;
-import net.bettercombat.client.BetterCombatClient;
-import net.bettercombat.forge.BetterCombatForge;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,8 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -54,10 +53,12 @@ public class PowerfulSword extends SwordItem implements BetterCombatClientEvents
 
 
 
-    public void spawnSlash(LocalPlayer localPlayer, AttackHand attackHand) {
+    public static void spawnSlash(ServerPlayer localPlayer) {
+        if(localPlayer.level.isClientSide) {return;}
         Finality.LOGGER.info("pew");
-        if(attackHand.itemStack().getItem() instanceof PowerfulSword) {
-            if(!localPlayer.level.isClientSide) {return;}
+
+        if(localPlayer.getMainHandItem().getItem() instanceof PowerfulSword) {
+
             Level level = localPlayer.level;
             SwordPorjetile porjectile = new SwordPorjetile(ModEnittys.SWORD_PORJECTILE.get(), localPlayer.level);
             porjectile.setPos(localPlayer.position().add(0, 1, 0));
@@ -75,8 +76,9 @@ public class PowerfulSword extends SwordItem implements BetterCombatClientEvents
     public void onPlayerAttackStart(LocalPlayer localPlayer, AttackHand attackHand, List<Entity> list, @Nullable Entity entity) {
         Finality.LOGGER.info("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
     }
-    public static void onPlayerSwing(LocalPlayer player, AttackHand attackHand) {
+    public static void onPlayerSwing(Player player, AttackHand attackHand) {
         // Send Packet to server
+        ModMesseges.sendToServer(new SwordPacket());
     }
 
 }

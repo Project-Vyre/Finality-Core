@@ -8,6 +8,7 @@ import com.oekt.finality.enitty.render.SwordPorjetileRender;
 import com.oekt.finality.item.ModItems;
 import com.oekt.finality.item.custom.FinalPickaxe;
 import com.oekt.finality.item.custom.PowerfulSword;
+import com.oekt.finality.networking.ModMesseges;
 import net.bettercombat.api.AttackHand;
 import net.bettercombat.api.client.BetterCombatClientEvents;
 import net.minecraft.client.player.LocalPlayer;
@@ -73,6 +74,9 @@ public class Finality
     private void commonSetup(final FMLCommonSetupEvent event)
     {
         // Some common setup code
+        event.enqueueWork(() -> {
+            ModMesseges.register();
+        });
         BetterCombatClientEvents.ATTACK_START.register(this::checkSwing);
     }
     public void checkSwing(LocalPlayer clientPlayerEntity, AttackHand attackHand){
