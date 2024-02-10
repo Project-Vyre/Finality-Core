@@ -7,7 +7,10 @@ import com.oekt.finality.enitty.custom.SwordPorjetile;
 import com.oekt.finality.enitty.render.SwordPorjetileRender;
 import com.oekt.finality.item.ModItems;
 import com.oekt.finality.item.custom.FinalPickaxe;
+import com.oekt.finality.item.custom.PowerfulSword;
+import net.bettercombat.api.AttackHand;
 import net.bettercombat.api.client.BetterCombatClientEvents;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -70,9 +73,13 @@ public class Finality
     private void commonSetup(final FMLCommonSetupEvent event)
     {
         // Some common setup code
-
+        BetterCombatClientEvents.ATTACK_START.register(this::checkSwing);
     }
-
+    public void checkSwing(LocalPlayer clientPlayerEntity, AttackHand attackHand){
+        if(attackHand.itemStack().getItem() instanceof PowerfulSword) {
+            PowerfulSword.onPlayerSwing(clientPlayerEntity, attackHand);
+        }
+    }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event)
@@ -89,6 +96,8 @@ public class Finality
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
+
+
             event.enqueueWork(() -> setPropertyOverride(ModItems.FINAL_PICKAXE.get(), new ResourceLocation(MODID, "hammer"), (itemstack, world, enitty, d) -> {
                 if (itemstack.getItem() instanceof FinalPickaxe)
                     return itemstack.getOrCreateTag().getBoolean("hammer") ? 1 : 0;
@@ -98,6 +107,9 @@ public class Finality
             // Some client setup code
             //ItemBlockRenderTypes.setRenderLayer(ModBlocks.LIVING_NETHERWART_CROP.get(), RenderType.cutout());
         }
+
+
+
 
     }
     public static void setPropertyOverride(Item itemProvider, ResourceLocation override, ItemPropertyFunction propertyGetter) {

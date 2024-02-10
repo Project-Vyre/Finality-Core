@@ -54,7 +54,7 @@ public class PowerfulSword extends SwordItem implements BetterCombatClientEvents
 
 
 
-    public void onPlayerAttackStart(LocalPlayer localPlayer, AttackHand attackHand) {
+    public void spawnSlash(LocalPlayer localPlayer, AttackHand attackHand) {
         Finality.LOGGER.info("pew");
         if(attackHand.itemStack().getItem() instanceof PowerfulSword) {
             if(!localPlayer.level.isClientSide) {return;}
@@ -75,4 +75,8 @@ public class PowerfulSword extends SwordItem implements BetterCombatClientEvents
     public void onPlayerAttackStart(LocalPlayer localPlayer, AttackHand attackHand, List<Entity> list, @Nullable Entity entity) {
         Finality.LOGGER.info("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
     }
+    public static void onPlayerSwing(LocalPlayer player, AttackHand attackHand) {
+        // Send Packet to server
+    }
+
 }
