@@ -100,9 +100,9 @@ public class SwordPorjetile extends Projectile {
 //            this.setYRot((float)(Mth.atan2(-newY, -newZ) * (double)(180F / (float)Math.PI)));
 //            this.setXRot((float)(Mth.atan2(newY, oldDeltaMovement.horizontalDistance()) * (double)(180F / (float)Math.PI)));
 //            this.setXRot(lerpRotation(this.xRotO, this.getXRot()));
-//            this.setYRot(lerpRotation(this.yRotO, this.getYRot()));
-//            this.setXRot(lerpRotation(this.xRotO, this.getXRot()+90));
-            this.setXRot(randomX);
+            this.setYRot(lerpRotation(this.yRotO, this.getYRot()));
+            this.setXRot(lerpRotation(this.xRotO, this.getXRot()));
+            //this.setYRot(randomX);
             this.setPos(newX, newY, newZ);
             this.checkInsideBlocks();
         } else {
